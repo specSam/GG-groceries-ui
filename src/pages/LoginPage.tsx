@@ -53,7 +53,7 @@ const LoginPage: React.FC = () => {
   return (
     <div className="login-container">
       <header className="app-header">
-        <h1 className="app-title">GroceryPriceCompare</h1>
+        <h1 className="app-title">GG Groceries</h1>
       </header>
       
       <div className="login-form-wrapper">

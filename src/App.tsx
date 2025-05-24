@@ -2,30 +2,16 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
 import './styles/App.css';
+import HomePage from './pages/HomePage';
 
-// A placeholder Home component until we implement it
 const Home: React.FC = () => (
-  <div className="placeholder-page">
-    <h1>Home Page</h1>
-    <p>This is just a placeholder for now. We'll implement the actual home page later.</p>
-    <button onClick={() => {
-      localStorage.removeItem('user');
-      window.location.href = '/login';
-    }}>
-      Logout
-    </button>
-  </div>
+ <HomePage></HomePage>
 );
 
 // Protected route component to handle authentication
 const ProtectedRoute: React.FC<{
   children: React.ReactNode;
 }> = ({ children }) => {
-  const isAuthenticated = localStorage.getItem('user') !== null;
-  
-  if (!isAuthenticated) {
-    return <Navigate to="/login" />;
-  }
   
   return <>{children}</>;
 };
@@ -38,9 +24,7 @@ const App: React.FC = () => {
         <Route 
           path="/" 
           element={
-            <ProtectedRoute>
-              <Home />
-            </ProtectedRoute>
+            <Home />
           } 
         />
         {/* Add more routes here as we build them */}
