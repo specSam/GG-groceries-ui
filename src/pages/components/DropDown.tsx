@@ -7,24 +7,19 @@ interface ButtonData {
   onClick: () => void;
 }
 
-// Define props interface
 interface DropDownProps {
   label: React.ReactNode
-  trigger: 'Click' | 'Hover'
   buttons: ButtonData[]
 }
 
-const DropDown: React.FC<DropDownProps> = ({label, trigger, buttons}) => {
-  const [open, setOpen] = useState<boolean>(true);
+const DropDown: React.FC<DropDownProps> = ({label, buttons}) => {
+  const [open, setOpen] = useState<boolean>(false);
   const [position, setPosition] = useState({ top: 0, right: 0 });
-  const triggerRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLDivElement>(null); // TODO study
 
   useEffect(() => {
-    console.log("use effect", triggerRef.current);
     if (open && triggerRef.current) {
-      console.log("here");
       const rect = triggerRef.current.getBoundingClientRect();
-      console.log('rect.height:', rect.height);
       setPosition({
         top: rect.top + window.scrollY + 4 + rect.height, // Start from top, add height
         right: window.innerWidth - rect.right + window.scrollX
@@ -32,11 +27,8 @@ const DropDown: React.FC<DropDownProps> = ({label, trigger, buttons}) => {
     }
   }, [open]);
 
-  const triggerProps = trigger === 'Click' ? {
-    onClick: () => setOpen(!open)
- } : {
-    onMouseEnter: () => setOpen(true),
-    onMouseLeave: () => setOpen(false)
+  const triggerProps = {
+    onClick: () => setOpen(!open),
  }
     return <div className='drop-down'>
       <div {...triggerProps} ref={triggerRef}>{label}</div>

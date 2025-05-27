@@ -8,14 +8,6 @@ const Home: React.FC = () => (
  <HomePage></HomePage>
 );
 
-// Protected route component to handle authentication
-const ProtectedRoute: React.FC<{
-  children: React.ReactNode;
-}> = ({ children }) => {
-  
-  return <>{children}</>;
-};
-
 const App: React.FC = () => {
   return (
     <Router>
