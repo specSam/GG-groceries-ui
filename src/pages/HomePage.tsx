@@ -10,11 +10,10 @@ const HomePage: React.FC = () => {
   
   // Get username from localStorage
   const userStr = localStorage.getItem('user');
-  const user = userStr ? JSON.parse(userStr) : { email: '' };
+  const user = userStr ? JSON.parse(userStr) : { email: '' }; // TODO: Not clear what this line is doing
   var username = user.email.split('@')[0]; // Extract username from email
-  var userIsLoggedIn = username != ''
+  var userIsLoggedIn = username != '' // TODO: Not clear that this will do what is intended.
   const [loggedIn, setLoggedIn] = useState<boolean>(userIsLoggedIn);
-  const [dropDownOpen, setDropdownOpen] = useState<boolean>(false);
   
   const handleLogout = () => {
     setLoggedIn(false);
@@ -23,19 +22,15 @@ const HomePage: React.FC = () => {
   const handleLogin = () => {
     navigate('login')
   }
-  
-  const handleNavigation = (section: string) => {
-    setActiveSection(section);
-  };
 
   const userButtons = [
     {
       label: "Profile",
-      onClick: () => handleNavigation('Profile')
+      onClick: () => setActiveSection('Profile')
     },
     {
       label: "Settings",
-      onClick: () => {},
+      onClick: () => setActiveSection('Settings'),
     },
     {
       label: "Log out",
@@ -45,7 +40,7 @@ const HomePage: React.FC = () => {
   
   return (
     <div className="home-container">
-      {/* Header with navigation */}
+      {/* Header search bar and user drop down*/}
       <header className="app-header">
         <div className="logo-container">
           <h1 className="app-title">GG Groceries</h1>
@@ -60,7 +55,7 @@ const HomePage: React.FC = () => {
           {!loggedIn ? (
             <button className="logging-button" onClick={handleLogin}>Login/Signup</button>
           ) : (
-            <DropDown label={<button id='user-drop-down'>Welcome {username}</button>} trigger="Click" buttons={userButtons} ></DropDown>
+            <DropDown label={<button id='user-drop-down'>Welcome {username}</button>} buttons={userButtons} ></DropDown>
           )} 
           
         
