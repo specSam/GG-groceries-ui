@@ -4,15 +4,17 @@ import { useNavigate } from 'react-router-dom';
 import '../styles/HomePage.css';
 import DropDown from './components/DropDown';
 
-const HomePage: React.FC = () => {
+interface HomePageProps  {
+  username: string
+}
+
+const HomePage: React.FC<HomePageProps> = ({username}) => {
   const navigate = useNavigate();
   const [activeSection, setActiveSection] = useState<string>('Welcome');
   
   // Get username from localStorage
-  const userStr = localStorage.getItem('user');
-  const user = userStr ? JSON.parse(userStr) : { email: '' }; // TODO: Not clear what this line is doing
-  var username = user.email.split('@')[0]; // Extract username from email
-  var userIsLoggedIn = username != '' // TODO: Not clear that this will do what is intended.
+  
+  var userIsLoggedIn = username != '' 
   const [loggedIn, setLoggedIn] = useState<boolean>(userIsLoggedIn);
   
   const handleLogout = () => {
