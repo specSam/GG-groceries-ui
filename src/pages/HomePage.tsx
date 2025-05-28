@@ -12,10 +12,7 @@ const HomePage: React.FC<HomePageProps> = ({username}) => {
   const navigate = useNavigate();
   const [activeSection, setActiveSection] = useState<string>('Welcome');
   
-  // Get username from localStorage
-  
-  var userIsLoggedIn = username != '' 
-  const [loggedIn, setLoggedIn] = useState<boolean>(userIsLoggedIn);
+  const [loggedIn, setLoggedIn] = useState<boolean>(true);
   
   const handleLogout = () => {
     setLoggedIn(false);
@@ -42,7 +39,7 @@ const HomePage: React.FC<HomePageProps> = ({username}) => {
   
   return (
     <div className="home-container">
-      {/* Header search bar and user drop down*/}
+      {/* Header search bar and user drop down/login/signin button depending on if user is logged in*/}
       <header className="app-header">
         <div className="logo-container">
           <h1 className="app-title">GG Groceries</h1>

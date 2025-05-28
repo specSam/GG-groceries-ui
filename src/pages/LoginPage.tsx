@@ -17,7 +17,7 @@ const LoginPage: React.FC = () => {
   const [isLoggingIn, setIsLoggingIn] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => { //hard to understand what is happening
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,

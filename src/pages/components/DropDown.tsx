@@ -12,10 +12,10 @@ interface DropDownProps {
   buttons: ButtonData[]
 }
 
-const DropDown: React.FC<DropDownProps> = ({label, buttons}) => {
+const DropDown: React.FC<DropDownProps> = ({label, buttons}) => { // TODO: Update drop down to close when clicked outside of box.
   const [open, setOpen] = useState<boolean>(false);
   const [position, setPosition] = useState({ top: 0, right: 0 });
-  const triggerRef = useRef<HTMLDivElement>(null); // TODO study
+  const triggerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (open && triggerRef.current) {
