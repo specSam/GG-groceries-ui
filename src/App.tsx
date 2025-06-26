@@ -4,15 +4,6 @@ import LoginPage from './pages/LoginPage';
 import './styles/App.css';
 import HomePage from './pages/HomePage';
 
-
-
-const Home: React.FC = () => {
-  const userStr = localStorage.getItem('user');
-  const user = userStr ? JSON.parse(userStr) : { email: '' };
-  var username = user.email.split('@')[0]; // Extract username from email
- return <HomePage username={username}></HomePage>
-};
-
 const App: React.FC = () => {
   return (
     <Router>
@@ -21,7 +12,7 @@ const App: React.FC = () => {
         <Route 
           path="/" 
           element={
-            <Home />
+            <HomePage username='guest' />
           } 
         />
         {/* Add more routes here as we build them */}

@@ -12,14 +12,15 @@ const HomePage: React.FC<HomePageProps> = ({username}) => {
   const navigate = useNavigate();
   const [activeSection, setActiveSection] = useState<string>('Welcome');
   
-  const [loggedIn, setLoggedIn] = useState<boolean>(true);
+  // const [loggedIn, setLoggedIn] = useState<boolean>(username != 'Guest');
+  const loggedIn = username !== 'Guest'
   
-  const handleLogout = () => {
-    setLoggedIn(false);
-  };
+  // const handleLogout = () => { TODO: add back when authentication is implemented
+  //   setLoggedIn(false);
+  // };
 
   const handleLogin = () => {
-    navigate('login')
+    navigate('/login')
   }
 
   const userButtons = [
@@ -31,10 +32,10 @@ const HomePage: React.FC<HomePageProps> = ({username}) => {
       label: "Settings",
       onClick: () => setActiveSection('Settings'),
     },
-    {
-      label: "Log out",
-      onClick: () => handleLogout(),
-    }
+    // { TODO: add back when authentication is implemented
+    //   label: "Log out",
+    //   onClick: () => handleLogout(),
+    // }
   ]
   
   return (
@@ -45,10 +46,10 @@ const HomePage: React.FC<HomePageProps> = ({username}) => {
           <h1 className="app-title">GG Groceries</h1>
         </div>
         <nav className="main-nav">
-          <search className="grocery-search">
+          <div className="grocery-search">
             <input placeholder='Search for any grocery!'/>
             <button></button>
-          </search>
+          </div>
         </nav>
         
           {!loggedIn ? (

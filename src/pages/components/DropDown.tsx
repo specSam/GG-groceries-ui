@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import './DropDown.css'
 
@@ -12,20 +12,52 @@ interface DropDownProps {
   buttons: ButtonData[]
 }
 
-const DropDown: React.FC<DropDownProps> = ({label, buttons}) => { // TODO: Update drop down to close when clicked outside of box.
+function pointInRect(x: number, y: number, r: DOMRect): boolean {
+  return (
+    x <= r.right &&
+    x >= r.left &&
+    y <= r.bottom &&
+    y >= r.top
+  );
+}
+
+
+const DropDown: React.FC<DropDownProps> = ({label, buttons}) => {
   const [open, setOpen] = useState<boolean>(false);
   const [position, setPosition] = useState({ top: 0, right: 0 });
   const triggerRef = useRef<HTMLDivElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const closeOnOutsideClick = useCallback((e: MouseEvent) => {
+    if (!triggerRef.current || !dropdownRef.current) {
+      return
+    }
+    const triggerRect = triggerRef.current.getBoundingClientRect();
+    const dropdownRect = dropdownRef.current.getBoundingClientRect();
+    if (!pointInRect(e.clientX, e.clientY, triggerRect) && !pointInRect(e.clientX, e.clientY, dropdownRect)) {
+      setOpen(false)
+    }
+  }, [setOpen])
 
   useEffect(() => {
-    if (open && triggerRef.current) {
+    if (!triggerRef.current) {
+      return
+    }
+    if (open) {
+      if (!dropdownRef.current) {
+        return
+      }
+      document.body.addEventListener('mousedown', closeOnOutsideClick);
       const rect = triggerRef.current.getBoundingClientRect();
       setPosition({
         top: rect.top + window.scrollY + 4 + rect.height, // Start from top, add height
         right: window.innerWidth - rect.right + window.scrollX
       });
     }
-  }, [open]);
+
+    return () => {
+      document.body.removeEventListener('mousedown', closeOnOutsideClick);
+    }
+  }, [open, closeOnOutsideClick]);
 
   const triggerProps = {
     onClick: () => setOpen(!open),
@@ -42,6 +74,7 @@ const DropDown: React.FC<DropDownProps> = ({label, buttons}) => { // TODO: Updat
             right: position.right,
             zIndex: 9999
           }}
+          ref={dropdownRef}
         >
           {buttons.map((button, index) => (
             <button 
