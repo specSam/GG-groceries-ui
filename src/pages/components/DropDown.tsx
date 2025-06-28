@@ -37,7 +37,11 @@ const DropDown: React.FC<DropDownProps> = ({label, buttons}) => {
       setOpen(false)
     }
   }, [setOpen])
-
+  const closeOnEscape = useCallback((k: KeyboardEvent) => {
+    if (k.key === 'Escape') {
+      setOpen(false);
+    }
+  }, [setOpen])
   useEffect(() => {
     if (!triggerRef.current) {
       return
@@ -47,24 +51,30 @@ const DropDown: React.FC<DropDownProps> = ({label, buttons}) => {
         return
       }
       document.body.addEventListener('mousedown', closeOnOutsideClick);
+      document.body.addEventListener('keydown', closeOnEscape);
+    }
+
+    return () => {
+      document.body.removeEventListener('mousedown', closeOnOutsideClick);
+      document.body.removeEventListener('keydown', closeOnEscape);
+    }
+  }, [open, closeOnOutsideClick, closeOnOutsideClick]);
+
+  const triggerProps = {
+    onClick: () => {
+      if (!triggerRef.current) {
+      return
+    }
       const rect = triggerRef.current.getBoundingClientRect();
       setPosition({
         top: rect.top + window.scrollY + 4 + rect.height, // Start from top, add height
         right: window.innerWidth - rect.right + window.scrollX
       });
-    }
-
-    return () => {
-      document.body.removeEventListener('mousedown', closeOnOutsideClick);
-    }
-  }, [open, closeOnOutsideClick]);
-
-  const triggerProps = {
-    onClick: () => setOpen(!open),
+      setOpen(!open)
+    },
  }
     return <div className='drop-down'>
       <div {...triggerProps} ref={triggerRef}>{label}</div>
-        
         {open && createPortal(
         <div 
           className="dropdown-menu" 
@@ -91,6 +101,7 @@ const DropDown: React.FC<DropDownProps> = ({label, buttons}) => {
         </div>,
         document.body
       )}
+        
     </div>
 }
 
