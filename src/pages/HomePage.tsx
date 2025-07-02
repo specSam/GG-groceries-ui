@@ -4,63 +4,58 @@ import { useNavigate } from 'react-router-dom';
 import '../styles/HomePage.css';
 import DropDown from './components/DropDown';
 
-const HomePage: React.FC = () => {
+interface HomePageProps  {
+  username: string
+}
+
+const HomePage: React.FC<HomePageProps> = ({username}) => {
   const navigate = useNavigate();
   const [activeSection, setActiveSection] = useState<string>('Welcome');
   
-  // Get username from localStorage
-  const userStr = localStorage.getItem('user');
-  const user = userStr ? JSON.parse(userStr) : { email: '' };
-  var username = user.email.split('@')[0]; // Extract username from email
-  var userIsLoggedIn = username != ''
-  const [loggedIn, setLoggedIn] = useState<boolean>(userIsLoggedIn);
-  const [dropDownOpen, setDropdownOpen] = useState<boolean>(false);
+  // const [loggedIn, setLoggedIn] = useState<boolean>(username != 'Guest');
+  const loggedIn = username !== 'Guest'
   
-  const handleLogout = () => {
-    setLoggedIn(false);
-  };
+  // const handleLogout = () => { TODO: add back when authentication is implemented
+  //   setLoggedIn(false);
+  // };
 
   const handleLogin = () => {
-    navigate('login')
+    navigate('/login')
   }
-  
-  const handleNavigation = (section: string) => {
-    setActiveSection(section);
-  };
 
   const userButtons = [
     {
       label: "Profile",
-      onClick: () => handleNavigation('Profile')
+      onClick: () => setActiveSection('Profile')
     },
     {
       label: "Settings",
-      onClick: () => {},
+      onClick: () => setActiveSection('Settings'),
     },
-    {
-      label: "Log out",
-      onClick: () => handleLogout(),
-    }
+    // { TODO: add back when authentication is implemented
+    //   label: "Log out",
+    //   onClick: () => handleLogout(),
+    // }
   ]
   
   return (
     <div className="home-container">
-      {/* Header with navigation */}
+      {/* Header search bar and user drop down/login/signin button depending on if user is logged in*/}
       <header className="app-header">
         <div className="logo-container">
           <h1 className="app-title">GG Groceries</h1>
         </div>
         <nav className="main-nav">
-          <search className="grocery-search">
+          <div className="grocery-search">
             <input placeholder='Search for any grocery!'/>
             <button></button>
-          </search>
+          </div>
         </nav>
         
           {!loggedIn ? (
             <button className="logging-button" onClick={handleLogin}>Login/Signup</button>
           ) : (
-            <DropDown label={<button id='user-drop-down'>Welcome {username}</button>} trigger="Click" buttons={userButtons} ></DropDown>
+            <DropDown label={<button id='user-drop-down'>Welcome {username}</button>} buttons={userButtons} ></DropDown>
           )} 
           
         

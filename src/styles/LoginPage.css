@@ -31,28 +31,6 @@
   margin-top: 50px; /* Add some space from the header */
 }
 
-.auth-toggle {
-  display: flex;
-  margin-bottom: 20px;
-  border-radius: 4px;
-  overflow: hidden;
-  border: 1px solid #e1e1e1;
-}
-
-.auth-toggle-btn {
-  flex: 1;
-  padding: 10px;
-  border: none;
-  background-color: #f5f5f5;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.auth-toggle-btn.active {
-  background-color: #4a8f29;
-  color: white;
-}
-
 .login-form {
   display: flex;
   flex-direction: column;

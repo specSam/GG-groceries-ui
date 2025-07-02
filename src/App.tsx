@@ -4,18 +4,6 @@ import LoginPage from './pages/LoginPage';
 import './styles/App.css';
 import HomePage from './pages/HomePage';
 
-const Home: React.FC = () => (
- <HomePage></HomePage>
-);
-
-// Protected route component to handle authentication
-const ProtectedRoute: React.FC<{
-  children: React.ReactNode;
-}> = ({ children }) => {
-  
-  return <>{children}</>;
-};
-
 const App: React.FC = () => {
   return (
     <Router>
@@ -24,7 +12,7 @@ const App: React.FC = () => {
         <Route 
           path="/" 
           element={
-            <Home />
+            <HomePage username='guest' />
           } 
         />
         {/* Add more routes here as we build them */}
