@@ -24,6 +24,14 @@
     font-weight: 600;
     margin: 0;
     color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    padding: 8px 16px;
+    border-radius: 8px;
+  }
+
+  .app-title:hover {
+    background-color: #3a7a1f; /* Slightly darker on hover */
   }
   
   .logging-button {

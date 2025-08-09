@@ -73,7 +73,7 @@ const HomePage: React.FC<HomePageProps> = ({username}) => {
       {/* Header search bar and user drop down/login/signin button depending on if user is logged in*/}
       <header className="app-header">
         <div className="logo-container">
-          <h1 className="app-title">GG Groceries</h1>
+          <h1 className="app-title" onClick={() => handleNavigation('Welcome')}>GG Groceries</h1>
         </div>
         <nav className="main-nav">
           <div className="nav-buttons">
